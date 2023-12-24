@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Café Cantine</title>
+
+    <link rel='stylesheet' id='accelerate_googlefonts-css'
+          href='//fonts.googleapis.com/css?family=Roboto%3A400%2C300%2C100%7CRoboto+Slab%3A700%2C400&#038;ver=6.1.4'
+          type='text/css' media='all'/>
+    <style>
+
+        * {
+            font-family: "Roboto Slab", sans-serif
+        }
+
+        body {
+            background-image: url('assets/header.png');
+            background-position: top;
+            background-repeat: no-repeat;
+            background-size: auto 250px;
+
+            padding-top: 20%;
+        }
+
+        .dashboard .header,
+        .dashboard .total-amount-container {
+            align-items: center;
+            text-align: center;
+        }
+
+        .dashboard .thank-you {
+            position: absolute;
+            left: 2rem;
+            bottom: 5rem;
+
+            font-size: xxx-large;
+        }
+
+        .dashboard .header {
+            font-size: xxx-large;
+        }
+
+        .total-amount-container p {
+            margin: auto;
+            font-size: 12rem;
+        }
+
+        .money-pot-info {
+            position: absolute;
+            bottom: .5rem;
+            right: .5rem;
+
+            text-align: center;
+            align-items: center;
+        }
+
+        .money-pot-info p {
+            margin: auto;
+        }
+
+        .qr-code-container {
+            width: 200px;
+            height: 200px;
+        }
+
+        #qr-code {
+            object-fit: contain;
+        }
+    </style>
+
+    <script type="application/javascript">
+        function updateAmount() {
+            let date = new Date()
+            let totalAmount = document.getElementById("total-amount");
+            totalAmount.innerHTML = date.getUTCSeconds() + "€";
+        }
+
+        function setDonatorValue(value) {
+            let donatorNameContainer = document.getElementById("donator-name");
+            donatorNameContainer.innerHTML = value;
+        }
+
+        function clearDonator() {
+            setDonatorValue("...");
+            setTimeout(displayNextDonator, 750);
+        }
+
+        function displayNextDonator() {
+            setDonatorValue("Robert&nbsp;!");
+            setTimeout(clearDonator, 5000);
+        }
+
+        function safetyReload() {
+            location.reload();
+        }
+
+        setInterval(safetyReload, 3600000);
+        setInterval(updateAmount, 10000);
+        setTimeout(displayNextDonator, 1)
+
+    </script>
+</head>
+<body>
+
+<div class="dashboard">
+    <div class="header">
+        Grâce à vous, nous avons récolté
+    </div>
+    <div class="total-amount-container">
+        <p id="total-amount">1€</p>
+    </div>
+    <div class="thank-you">
+        Merci à <span id="donator-name"></span>
+    </div>
+</div>
+
+<div class="money-pot-info">
+    <p>Vous pouvez encore participer !</p>
+    <p class="qr-code-container">
+        <img id="qr-code"
+             src="assets/qr-code_200x200.png"
+             alt="QR code contenant le lien vers la cagnotte : https://www.papayoux-solidarite.com/fr/collecte/le-cafe-cantine-a-besoin-de-soutien"/>
+    </p>
+</div>
+</body>
+</html>
