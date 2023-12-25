@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 
 def fetch_data():
     with urlopen('https://www.papayoux-solidarite.com/fr/collecte/le-cafe-cantine-a-besoin-de-soutien') as response:
-        soup = BeautifulSoup(response, 'html.parser')
+        soup = BeautifulSoup(response.read().decode('utf-8', 'ignore'), 'html.parser')
         __update_amount(soup)
         __update_donators(soup)
 
