@@ -67,38 +67,6 @@
             object-fit: contain;
         }
     </style>
-
-    <script type="application/javascript">
-        function updateAmount() {
-            let date = new Date()
-            let totalAmount = document.getElementById("total-amount");
-            totalAmount.innerHTML = date.getUTCSeconds() + "€";
-        }
-
-        function setDonatorValue(value) {
-            let donatorNameContainer = document.getElementById("donator-name");
-            donatorNameContainer.innerHTML = value;
-        }
-
-        function clearDonator() {
-            setDonatorValue("...");
-            setTimeout(displayNextDonator, 750);
-        }
-
-        function displayNextDonator() {
-            setDonatorValue("Robert&nbsp;!");
-            setTimeout(clearDonator, 5000);
-        }
-
-        function safetyReload() {
-            location.reload();
-        }
-
-        setInterval(safetyReload, 3600000);
-        setInterval(updateAmount, 10000);
-        setTimeout(displayNextDonator, 1)
-
-    </script>
 </head>
 <body>
 
@@ -122,5 +90,61 @@
              alt="QR code contenant le lien vers la cagnotte : https://www.papayoux-solidarite.com/fr/collecte/le-cafe-cantine-a-besoin-de-soutien"/>
     </p>
 </div>
+
+<script type="application/javascript">
+
+    let AMOUNT = "0";
+
+    function updateAmount() {
+        let date = new Date()
+        let totalAmount = document.getElementById("total-amount");
+        totalAmount.innerHTML = date.getUTCSeconds() + "€";
+    }
+
+    function setDonatorValue(value) {
+        let donatorNameContainer = document.getElementById("donator-name");
+        donatorNameContainer.innerHTML = value;
+    }
+
+    function clearDonator() {
+        setDonatorValue("...");
+        setTimeout(displayNextDonator, 750);
+    }
+
+    function displayNextDonator() {
+        setDonatorValue("Robert&nbsp;!");
+        setTimeout(clearDonator, 5000);
+    }
+
+    function safetyReload() {
+        location.reload();
+    }
+
+    function fetchData() {
+        fetch('https://www.papayoux-solidarite.com/fr/collecte/le-cafe-cantine-a-besoin-de-soutien')
+            .then(response => response.text())
+            .then(data => {
+                collectData(data);
+            });
+    }
+
+    function saveAmount(amount) {
+        AMOUNT = amount;
+        console.log(AMOUNT);
+    }
+
+    function collectData(data) {
+        const parser = new DOMParser();
+        const htmlDoc = parser.parseFromString(data, 'text/html');
+        let amount = htmlDoc.getElementById("montant").textContent;
+        saveAmount(amount);
+    }
+
+    setInterval(fetchData, 300000);
+    setInterval(safetyReload, 3600000);
+    setInterval(updateAmount, 10000);
+    setTimeout(displayNextDonator, 1)
+</script>
+
 </body>
 </html>
