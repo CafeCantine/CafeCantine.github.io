@@ -75,7 +75,7 @@
         Grâce à vous, nous avons récolté
     </div>
     <div class="total-amount-container">
-        <p id="total-amount">1€</p>
+        <p id="total-amount">...</p>
     </div>
     <div class="thank-you">
         Merci à <span id="donator-name"></span>
@@ -118,18 +118,16 @@
     }
 
     function fetchData() {
-        fetch('https://www.papayoux-solidarite.com/fr/collecte/le-cafe-cantine-a-besoin-de-soutien')
-            .then(response => response.text())
-            .then(data => {
-                collectData(data);
-            });
-    }
+        fetch('data/amount')
+            .then(function (response) {
+                return response.text();
+            }).then(function (text) {
+            console.log(text);
+            updateAmount(text)
 
-    function collectData(data) {
-        const parser = new DOMParser();
-        const htmlDoc = parser.parseFromString(data, 'text/html');
-        let amount = htmlDoc.getElementById("montant").textContent;
-        updateAmount(amount);
+        }).catch(function (err) {
+            console.warn('Something went wrong.', err);
+        });
     }
 
     setInterval(fetchData, 15000);
