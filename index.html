@@ -93,6 +93,9 @@
 
 <script type="application/javascript">
 
+    let DONATORS = [];
+    let DONATOR_INDEX = 0;
+
     function updateAmount(value) {
         let totalAmount = document.getElementById("total-amount");
         totalAmount.innerHTML = value;
@@ -109,7 +112,9 @@
     }
 
     function displayNextDonator() {
-        setDonatorValue("Robert&nbsp;!");
+        DONATOR_INDEX = (DONATOR_INDEX + 1) % DONATORS.length;
+        let donator = DONATORS[DONATOR_INDEX];
+        setDonatorValue(donator + "&nbsp;!");
         setTimeout(clearDonator, 5000);
     }
 
@@ -130,9 +135,24 @@
         });
     }
 
+    function fetchDonators() {
+        fetch('data/donators.json')
+            .then(function (response) {
+                return response.json();
+            }).then(function (donators) {
+            DONATORS = donators;
+            displayNextDonator()
+        }).catch(function (err) {
+            console.warn('Something went wrong.', err);
+        });
+    }
+
+    fetchAmount()
+    fetchDonators()
+
     setInterval(fetchAmount, 60000);
+    setInterval(fetchDonators, 60000);
     setInterval(safetyReload, 3600000);
-    setTimeout(displayNextDonator, 1)
 </script>
 
 </body>
