@@ -93,12 +93,9 @@
 
 <script type="application/javascript">
 
-    let AMOUNT = "0";
-
-    function updateAmount() {
-        let date = new Date()
+    function updateAmount(value) {
         let totalAmount = document.getElementById("total-amount");
-        totalAmount.innerHTML = date.getUTCSeconds() + "€";
+        totalAmount.innerHTML = value;
     }
 
     function setDonatorValue(value) {
@@ -128,21 +125,15 @@
             });
     }
 
-    function saveAmount(amount) {
-        AMOUNT = amount;
-        console.log(AMOUNT);
-    }
-
     function collectData(data) {
         const parser = new DOMParser();
         const htmlDoc = parser.parseFromString(data, 'text/html');
         let amount = htmlDoc.getElementById("montant").textContent;
-        saveAmount(amount);
+        updateAmount(amount);
     }
 
-    setInterval(fetchData, 300000);
+    setInterval(fetchData, 15000);
     setInterval(safetyReload, 3600000);
-    setInterval(updateAmount, 10000);
     setTimeout(displayNextDonator, 1)
 </script>
 
