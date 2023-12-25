@@ -18,8 +18,15 @@
             background-position: top;
             background-repeat: no-repeat;
             background-size: auto 250px;
+        }
 
-            padding-top: 20%;
+        .dashboard {
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -ms-transform: translateY(-50%);
+            transform: translateX(-50%) translateY(-50%);
         }
 
         .dashboard .header,
@@ -28,7 +35,7 @@
             text-align: center;
         }
 
-        .dashboard .thank-you {
+        .thank-you {
             position: absolute;
             left: 2rem;
             bottom: 5rem;
@@ -77,9 +84,11 @@
     <div class="total-amount-container">
         <p id="total-amount">...</p>
     </div>
-    <div class="thank-you">
-        Merci à <span id="donator-name"></span>
-    </div>
+
+</div>
+
+<div class="thank-you">
+    Merci à <span id="donator-name"></span>
 </div>
 
 <div class="money-pot-info">
