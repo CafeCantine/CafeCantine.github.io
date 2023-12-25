@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+import json
 from urllib.request import urlopen
 
 from bs4 import BeautifulSoup
@@ -20,7 +20,9 @@ def __update_amount(soup: BeautifulSoup):
 
 
 def __update_donators(soup: BeautifulSoup):
-    pass
+    donators = [anchor.text for anchor in soup.find_all("div", {"id": "pseudo"})]
+    with open("data/donators.json", "w") as target:
+        target.write(json.dumps(donators))
 
 
 if __name__ == "__main__":
